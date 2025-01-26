@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.routers.cryptocurrencies_router import router as cryptocurrencies_router
+from src.routers.cryptocurrency_router import router as cryptocurrencies_router
 
 from src.Client_CoinMarcetCap.http_client import CMCHTTPClient
 from src.config import API_KEY_COINMARKETCAP

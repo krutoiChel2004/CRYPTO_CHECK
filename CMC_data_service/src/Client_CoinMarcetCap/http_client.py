@@ -1,6 +1,7 @@
 from aiohttp import ClientSession
 
-from src.schemes.cryptocurrencies_schemas.list_currencies import (ListCurrencies)
+from src.schemes.cryptocurrency_schemas.list_currencies import (ListCurrencies)
+from src.schemes.cryptocurrency_schemas.currency import (Currency)
 
 class HTTPCient:
     def __init__(self, base_url, api_key):
@@ -19,6 +20,16 @@ class CMCHTTPClient(HTTPCient):
 
         async with self._session.get(
             "/v1/cryptocurrency/listings/latest", 
+            params=params.model_dump()
+        ) as resp:
+            
+            result = await resp.json()
+            return result["data"]
+        
+    async def get_currency(self, params: Currency = None):
+
+        async with self._session.get(
+            "/v2/cryptocurrency/quotes/latest", 
             params=params.model_dump()
         ) as resp:
             
