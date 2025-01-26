@@ -26,7 +26,7 @@ class CMCHTTPClient(HTTPCient):
         ) as resp:
             
             result = await resp.json()
-            return result["data"]
+            return result
         
     async def get_currency(self, params: Currency = None):
 
@@ -36,7 +36,7 @@ class CMCHTTPClient(HTTPCient):
         ) as resp:
             
             result = await resp.json()
-            return result["data"]
+            return result
         
     async def price_conversion(self, params: PriceConversion = None):
 
