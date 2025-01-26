@@ -2,6 +2,8 @@ from aiohttp import ClientSession
 
 from src.schemes.cryptocurrency_schemas.list_currencies import (ListCurrencies)
 from src.schemes.cryptocurrency_schemas.currency import (Currency)
+from src.schemes.price_conversion_schemas.price_conversion import PriceConversion
+
 
 class HTTPCient:
     def __init__(self, base_url, api_key):
@@ -35,3 +37,13 @@ class CMCHTTPClient(HTTPCient):
             
             result = await resp.json()
             return result["data"]
+        
+    async def price_conversion(self, params: PriceConversion = None):
+
+        async with self._session.get(
+            "/v2/tools/price-conversion", 
+            params=params.model_dump()
+        ) as resp:
+            
+            result = await resp.json()
+            return result
