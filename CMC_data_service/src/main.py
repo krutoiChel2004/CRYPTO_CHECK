@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-
+from src.routers.cryptocurrencies_router import router as cryptocurrencies_router
 
 from src.Client_CoinMarcetCap.http_client import CMCHTTPClient
 from src.config import API_KEY_COINMARKETCAP
@@ -13,13 +13,4 @@ cmc_client = CMCHTTPClient(
     api_key=API_KEY_COINMARKETCAP
 )
 
-
-@app.get("/cryptocurrencies")
-async def get_cryptocurrncies():
-    print(API_KEY_COINMARKETCAP)
-    parameters = {
-        'start':'1',
-        'limit':'1',
-        'convert':'USD'
-        }
-    return await cmc_client.get_listings(parameters)
+app.include_router(cryptocurrencies_router)

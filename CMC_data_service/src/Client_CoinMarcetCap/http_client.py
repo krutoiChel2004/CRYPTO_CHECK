@@ -1,5 +1,7 @@
 from aiohttp import ClientSession
 
+from src.schemes.cryptocurrencies_schemas.list_currencies import (ListCurrencies)
+
 class HTTPCient:
     def __init__(self, base_url, api_key):
         self._session = ClientSession(
@@ -11,10 +13,14 @@ class HTTPCient:
             
         )
 
-# pro-api.coinmarketcap.com
 
 class CMCHTTPClient(HTTPCient):
-    async def get_listings(self, params = None):
-        async with self._session.get("/v1/cryptocurrency/listings/latest", params=params) as resp:
+    async def get_listings(self, params: ListCurrencies = None):
+
+        async with self._session.get(
+            "/v1/cryptocurrency/listings/latest", 
+            params=params.model_dump()
+        ) as resp:
+            
             result = await resp.json()
             return result["data"]
